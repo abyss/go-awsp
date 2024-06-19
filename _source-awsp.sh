@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 0 ]; then
-  _go-awsp
+  go-awsp
   selected_profile=$(cat "$HOME/.awsp")
 else
   selected_profile="$*"

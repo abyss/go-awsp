@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"slices"
 	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -60,8 +61,7 @@ func main() {
 	profiles, err := getLocalAwsProfiles()
 	check(err)
 
-	currentProfile := os.Environ() // TODO: Get current AWS_PROFILE
-	fmt.Println(currentProfile)
+	currentProfileIndex := slices.Index(profiles, os.Getenv("AWS_PROFILE"))
 
 	if len(profiles) == 0 {
 		log.Println("No profiles found.")
@@ -73,7 +73,7 @@ func main() {
 	prompt := &survey.Select{
 		Message: "Choose a profile:",
 		Options: profiles,
-		Default: profiles[10], // TODO: Default to current
+		Default: currentProfileIndex,
 	}
 
 	var selection string

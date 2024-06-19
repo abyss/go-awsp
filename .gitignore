@@ -1,5 +1,5 @@
 # Binaries for programs and plugins
-_go-awsp
+bin/
 *.exe
 *.exe~
 *.dll
