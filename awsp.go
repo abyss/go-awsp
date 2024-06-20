@@ -63,6 +63,10 @@ func main() {
 
 	currentProfileIndex := slices.Index(profiles, os.Getenv("AWS_PROFILE"))
 
+	if currentProfileIndex == -1 {
+		currentProfileIndex = 0
+	}
+
 	if len(profiles) == 0 {
 		log.Println("No profiles found.")
 		log.Println("Refer to this guide for help on setting up a new AWS profile:")
