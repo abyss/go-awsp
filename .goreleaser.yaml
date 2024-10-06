@@ -52,3 +52,5 @@ brews:
     repository:
       owner: abyss
       name: homebrew-tools
+      token: "{{ .Env.HOMEBREW_TOOLS_PAT }}"
+
