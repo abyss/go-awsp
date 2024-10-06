@@ -29,11 +29,9 @@ func getLocalAwsProfiles() (list []string, err error) {
 
 	list = append(list, "default")
 	for _, v := range f.Sections() {
-		if len(v.Keys()) != 0 { // Get only the sections having Keys
-			parts := strings.Split(v.Name(), " ")
-			if len(parts) == 2 && parts[0] == "profile" { // skip default
-				list = append(list, parts[1])
-			}
+		parts := strings.Split(v.Name(), " ")
+		if len(parts) == 2 && parts[0] == "profile" { // skip default
+			list = append(list, parts[1])
 		}
 	}
 
