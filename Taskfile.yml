@@ -3,3 +3,4 @@ version: '3'
 tasks:
   build: go build -o bin/
   install: cp bin/go-awsp ~/bin/
+  tidy: go mod tidy
