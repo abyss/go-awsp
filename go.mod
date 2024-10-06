@@ -21,6 +21,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.25.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.29.0 // indirect
 	github.com/aws/smithy-go v1.20.2 // indirect
+	github.com/fatih/color v1.17.0 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"errors"
+	"io/fs"
 	"log"
 	"os"
 	"path"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/fatih/color"
 	"gopkg.in/ini.v1"
 )
 
@@ -20,10 +22,19 @@ func check(err error) {
 	}
 }
 
+func profileErrorExit(out string) {
+	color.HiRed("%s\n\n", out)
+	color.Red("Refer to this guide for help on setting up a new AWS profile:")
+	color.Red("https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html")
+	os.Exit(1)
+}
+
 func getLocalAwsProfiles() (list []string, err error) {
 	fname := config.DefaultSharedConfigFilename()
 	f, err := ini.Load(fname)
-	if err != nil {
+	if errors.Is(err, fs.ErrNotExist) {
+		profileErrorExit("Default shared config file not found.")
+	} else if err != nil {
 		return list, err
 	}
 
@@ -54,8 +65,6 @@ func writeAwspFile(profile string) (err error) {
 }
 
 func main() {
-	fmt.Println("AWS Profile Switcher")
-
 	profiles, err := getLocalAwsProfiles()
 	check(err)
 
@@ -66,10 +75,7 @@ func main() {
 	}
 
 	if len(profiles) == 0 {
-		log.Println("No profiles found.")
-		log.Println("Refer to this guide for help on setting up a new AWS profile:")
-		log.Println("https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html")
-		os.Exit(1)
+		profileErrorExit("No profiles found.")
 	}
 
 	prompt := &survey.Select{
