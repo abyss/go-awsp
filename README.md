@@ -2,7 +2,7 @@
 
 Easily switch between AWS Profiles with an interactive selector.
 
-Rewrite [awsp by johnnyopao](https://github.com/johnnyopao/awsp) in golang with minor improvements.
+Rewrite of [awsp by johnnyopao](https://github.com/johnnyopao/awsp) in golang with minor improvements.
 
 ## How it works
 
@@ -26,9 +26,9 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html
 
 1) Download and include the `go-awsp` binary in your PATH.
 
-2) Put `_source-awsp` in a known location (`~/bin` is a good spot).
+2) Put `_source-awsp.sh` in a known location (`~/bin` is a good spot).
 
-3) Add the following line to your `.bashrc` or `.zshrc` config, including the full path to `_source-awsp`.
+3) Add the following line to your `.bashrc` or `.zshrc` config, including the full path to `_source-awsp.sh`.
 ```sh
 alias awsp="source ~/bin/_source-awsp.sh"
 ```
