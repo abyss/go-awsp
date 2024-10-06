@@ -47,10 +47,24 @@ changelog:
       - "^test:"
 
 brews:
-  - name: go-awsp
+  - name: awsp
     homepage: https://github.com/abyss/go-awsp
+    description: "Easily switch between AWS Profiles with an interactive selector"
+
+    directory: Formula
     repository:
       owner: abyss
       name: homebrew-tools
       token: "{{ .Env.HOMEBREW_TOOLS_PAT }}"
 
+    install: |
+      prefix.install "_source-awsp.sh"
+      bin.install "go-awsp"
+
+    caveats: |
+      ##################################################################
+
+      To use awsp, add the following to your shell profile:
+          alias awsp='source "$(brew --prefix awsp)/_source-awsp.sh"'
+
+      ##################################################################
