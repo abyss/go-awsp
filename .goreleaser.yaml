@@ -45,3 +45,10 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+
+brews:
+  - name: go-awsp
+    homepage: https://github.com/abyss/go-awsp
+    repository:
+      owner: abyss
+      name: homebrew-tools
