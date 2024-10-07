@@ -22,6 +22,7 @@ archives:
       - LICENSE.md
       - README.md
       - _source-awsp.sh
+      - awsp.ps1
 
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
