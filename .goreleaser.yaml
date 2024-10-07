@@ -19,7 +19,7 @@ archives:
   - id: default
 
     files:
-      - LICENSE.md
+      - LICENSE
       - README.md
       - _source-awsp.sh
       - awsp.ps1
