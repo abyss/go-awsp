@@ -1,0 +1,33 @@
+#!/bin/sh
+# shellcheck shell=sh
+# This script should be sourced, not called directly.
+# Add the following to your shell profile:
+#   alias awsp='. awsp'
+
+_this_type=$(type -- "${0##*/}" 2>&1)
+# "not found": $0 is the login shell name when sourced in POSIX sh (e.g. -bash)
+# "alias": zsh type output when the alias is configured
+# BASH_SOURCE != $0: bash-specific sourced-file detection
+# shellcheck disable=SC3028
+if [ "${_this_type#*not found}" = "$_this_type" ] &&
+    [ "${_this_type#*alias}" = "$_this_type" ] &&
+    [ "${BASH_SOURCE:-$0}" = "${0}" ]; then
+  echo "awsp must be sourced to set AWS_PROFILE. Add the following to your shell profile:"
+  echo ""
+  echo "  alias awsp='. awsp'"
+  exit 1
+fi
+unset _this_type
+
+if [ $# -eq 0 ]; then # No arguments
+  selected_profile=$(go-awsp)
+else
+  selected_profile="$*"
+fi
+
+# Unset default profile, rather than setting it to "default"
+if [ -z "$selected_profile" ] || [ "$selected_profile" = "default" ]; then
+  unset AWS_PROFILE
+else
+  export AWS_PROFILE="$selected_profile"
+fi

@@ -8,7 +8,7 @@ This is a rewrite of [awsp by johnnyopao](https://github.com/johnnyopao/awsp) in
 
 The AWS CLI uses the profile defined in the `AWS_PROFILE` environment variable if no specific profile flag is set.
 
-Using a combination of a sourced script and a Go application, this tool parses the current AWS configuration (typically `~/.aws/config`). It then provides a filterable list and sets the `AWS_PROFILE` environment variable based on your selection.
+Using a combination of a sourced script and a Go application, this tool parses the current AWS configuration (typically `~/.aws/config`). It then provides a filterable list and exports `AWS_PROFILE` into your shell based on your selection.
 
 ## Requirements
 
@@ -25,22 +25,22 @@ Refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/user
 ## Installation
 The AWS Profile Switcher can be installed on macOS, Linux, or Windows, and works with most standard shells, including PowerShell.
 
-In non-PowerShell shells, an alias is needed because `_source-awsp.sh` must be sourced to modify the parent shell's environment variables.
+In non-PowerShell shells, an alias is needed because `awsp` must be sourced to modify the parent shell's environment variables.
 
 ### Homebrew (Mac/Linux)
 1) `brew install abyss/tools/awsp`
 
 2) Add the following to your shell profile (e.g., `.bashrc` or `.zshrc`):
 ```sh
-alias awsp='source "$(brew --prefix awsp)/_source-awsp.sh"'
+alias awsp='. awsp'
 ```
 
 ### Manual (Bash, Zsh, etc.)
 1) Download the `go-awsp` binary from the [releases page](https://github.com/abyss/go-awsp/releases) and include it in your PATH.
-2) Place the script `_source-awsp.sh` in a known directory, such as `~/bin`.
-3) Add the following to your shell profile (e.g., `.bashrc` or `.zshrc`), including the full path to `_source-awsp.sh`:
+2) Place the script `awsp` in a directory on your PATH, such as `~/bin`.
+3) Add the following to your shell profile (e.g., `.bashrc` or `.zshrc`):
 ```sh
-alias awsp="source ~/bin/_source-awsp.sh"
+alias awsp='. awsp'
 ```
 
 ### Manual (PowerShell)
