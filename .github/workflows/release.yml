@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -36,20 +36,22 @@ jobs:
       - name: Generate token from GitHub App
         if: steps.semver.outputs.next != ''
         id: generate-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ secrets.APP_ID }}
+          client-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: abyss
           repositories: homebrew-tools
 
       - name: Set up Go
         if: steps.semver.outputs.next != ''
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
 
       - name: Run GoReleaser
         if: steps.semver.outputs.next != ''
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           distribution: goreleaser
           version: '~> v2'

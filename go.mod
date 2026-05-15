@@ -1,6 +1,6 @@
 module github.com/abyss/go-awsp
 
-go 1.22.3
+go 1.26.3
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.7
