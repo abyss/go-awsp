@@ -60,7 +60,7 @@ brews:
       token: "{{ .Env.HOMEBREW_TOOLS_PAT }}"
 
     install: |
-      prefix.install "awsp"
+      bin.install "awsp"
       prefix.install "_source-awsp.sh"
       bin.install "go-awsp"
 
