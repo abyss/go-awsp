@@ -1,32 +1,59 @@
-name: goreleaser
+name: Release
 
 on:
-  workflow_dispatch:
   push:
-    # run only against tags
-    tags:
-      - '*'
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
-  goreleaser:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          fetch-tags: true
+
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: main
+          patchAll: true
+          noVersionBumpBehavior: skip
+
+      - name: Create Tag
+        if: steps.semver.outputs.next != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a ${{ steps.semver.outputs.next }} -m "Release ${{ steps.semver.outputs.next }}"
+
+      - name: Generate token from GitHub App
+        if: steps.semver.outputs.next != ''
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: abyss
+          repositories: homebrew-tools
+
       - name: Set up Go
+        if: steps.semver.outputs.next != ''
         uses: actions/setup-go@v5
+
       - name: Run GoReleaser
+        if: steps.semver.outputs.next != ''
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: '~> v2' # 'latest', 'nightly', or a semver
+          version: '~> v2'
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TOOLS_PAT: ${{ secrets.HOMEBREW_TOOLS_PAT }}
+          HOMEBREW_TOOLS_PAT: ${{ steps.generate-token.outputs.token }}
