@@ -71,7 +71,7 @@ func main() {
 	}
 
 	var selection string
-	err = survey.AskOne(prompt, &selection, survey.WithPageSize(7))
+	err = survey.AskOne(prompt, &selection, survey.WithPageSize(7), survey.WithStdio(os.Stdin, os.Stderr, os.Stderr))
 	check(err)
 
 	fmt.Println(selection)
