@@ -1,10 +1,7 @@
-# Run the command, which will output the chosen profile to ~/.awsp
 if ($args.Count -eq 0) { # No arguments
-    go-awsp
-    $selected_profile = Get-Content -Path "$HOME\.awsp"
+    $selected_profile = & go-awsp
 } else {
     $selected_profile = $args -join ' '
-    $selected_profile | Out-File -FilePath "$HOME\.awsp" -Encoding utf8
 }
 
 # Set-AWSCredential is attempted to also set the profile with AWS Tools for PowerShell

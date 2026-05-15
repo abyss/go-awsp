@@ -1,13 +1,12 @@
 # shellcheck shell=sh
 # This script should be sourced, not called
+# DEPRECATED: use 'awsp' instead. Update your alias to: alias awsp='. awsp'
+echo "awsp: _source-awsp.sh is deprecated and will break in a future release. Update your alias to: alias awsp='. awsp'"
 
-# Run the command, which will output the chosen profile to ~/.awsp
 if [ $# -eq 0 ]; then # No arguments
-  go-awsp
-  selected_profile=$(cat "$HOME/.awsp")
+  selected_profile=$(go-awsp)
 else
   selected_profile="$*"
-  echo "$selected_profile" > "$HOME/.awsp"
 fi
 
 # Unset default profile, rather than setting it to "default"

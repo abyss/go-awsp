@@ -2,10 +2,10 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"log"
 	"os"
-	"path"
 	"slices"
 	"strings"
 
@@ -49,20 +49,6 @@ func getLocalAwsProfiles() (list []string, err error) {
 	return
 }
 
-func writeAwspFile(profile string) (err error) {
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		return err
-	}
-
-	awspFile := path.Join(homeDir, ".awsp")
-	err = os.WriteFile(awspFile, []byte(profile), 0644)
-	if err != nil {
-		return err
-	}
-
-	return
-}
 
 func main() {
 	profiles, err := getLocalAwsProfiles()
@@ -88,5 +74,5 @@ func main() {
 	err = survey.AskOne(prompt, &selection, survey.WithPageSize(7))
 	check(err)
 
-	writeAwspFile(selection)
+	fmt.Println(selection)
 }
