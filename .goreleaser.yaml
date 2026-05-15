@@ -47,6 +47,7 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+      - "^chore:"
 
 brews:
   - name: awsp
